@@ -9,4 +9,7 @@ services:
     ports:
       - "8000:80"  # Mapeamento da porta do host para o contêiner (altere conforme necessário)
     volumes:
-      - .:/var/www  # Mapeamento do diretório local para o diretório do contêiner
+      - ./laravel:/var/www  # Mapeamento do diretório local 'laravel' para o diretório do contêiner
+    command: >
+      bash -c 'if [ ! -d "/var/www/vendor" ]; then composer install; fi &&
+      php /var/www/artisan serve --host=0.0.0.0 --port=80'
