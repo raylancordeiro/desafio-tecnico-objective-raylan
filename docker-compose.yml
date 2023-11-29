@@ -12,4 +12,20 @@ services:
       - ./laravel:/var/www  # Mapeamento do diretório local 'laravel' para o diretório do contêiner
     command: >
       bash -c 'if [ ! -d "/var/www/vendor" ]; then composer install; fi &&
-      php /var/www/artisan serve --host=0.0.0.0 --port=80'
+      php /var/www/artisan migrate &&
+      php /var/www/artisan serve --host=0.0.0.0 --port=80
+      '
+
+    depends_on:
+      - db
+
+  db:
+    image: mysql:latest
+    container_name: desafio-tecnico-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'objective'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - "3306:3306"
