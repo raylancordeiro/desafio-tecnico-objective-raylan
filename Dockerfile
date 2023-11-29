@@ -5,7 +5,9 @@ FROM php:8.2
 RUN apt-get update \
     && apt-get install -y \
         git \
-        unzip
+        unzip \
+        libpq-dev libzip-dev \
+    && docker-php-ext-install pdo_mysql pdo_pgsql zip
 
 # Instala o Composer globalmente
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
