@@ -17,4 +17,10 @@ class ContaRepository
     {
         return Conta::where('conta_id', $contaId)->first();
     }
+
+    public function persistSaldo(Conta $conta, float $valor)
+    {
+        $conta->setSaldo($conta->saldo - $valor);
+        $conta->save();
+    }
 }
