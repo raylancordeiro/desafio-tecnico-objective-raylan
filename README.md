@@ -1,6 +1,6 @@
 # Desafio Técnico - Projeto "desafio-tecnico-objective-raylan"
 
-Este projeto foi criado para atender aos requisitos do Desafio Técnico conforme descrito no arquivo [desafio_tecnico_obj.pdf](desafio_tecnico_obj.pdf).
+Este projeto foi criado para atender aos requisitos do Desafio Técnico conforme descrito no arquivo [desafio_tcnico_obj.pdf](desafio_tecnico_obj.pdf).
 
 ## Descrição
 
@@ -25,7 +25,6 @@ Certifique-se de ter o Docker instalado em seu sistema para criar e executar o a
 
 3. Para construir e iniciar o contêiner, execute:
     ```bash
-    Copy code
     docker-compose up --build
     ```
 
