@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContaRequest;
 use App\Repositories\ContaRepository;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,7 +24,7 @@ class ContaController extends Controller
             $conta = $this->contaRepository->findByContaId($contaId);
 
             if (!$conta) {
-                return response()->json(['message' => 'Conta não encontrada'], 404);
+                return response()->json(['message' => 'Conta não encontrada'], Response::HTTP_NOT_FOUND);
             }
 
             return response()->json($conta);

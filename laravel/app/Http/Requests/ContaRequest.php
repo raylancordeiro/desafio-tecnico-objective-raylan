@@ -22,8 +22,16 @@ class ContaRequest extends FormRequest
     public function rules()
     {
         return [
-            'conta_id' => 'required|unique:contas|integer',
-            'saldo' => 'required|numeric'
+            'conta_id' => [
+                'required',
+                'unique:contas',
+                'integer',
+            ],
+            'saldo' => [
+                'required',
+                'numeric',
+                'min:0'
+            ]
         ];
     }
 
@@ -35,6 +43,7 @@ class ContaRequest extends FormRequest
             'conta_id.integer' => 'O campo conta_id deve ser um número inteiro.',
             'saldo.required' => 'O campo saldo é obrigatório.',
             'saldo.numeric' => 'O campo saldo deve ser um número.',
+            'valor.min' => 'O valor do saldo não pode ser menor que zero.',
         ];
     }
 }

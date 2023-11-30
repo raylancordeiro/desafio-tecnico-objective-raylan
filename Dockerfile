@@ -7,6 +7,7 @@ RUN apt-get update \
         git \
         unzip \
         libpq-dev libzip-dev \
+        mariadb-client \
     && docker-php-ext-install pdo_mysql pdo_pgsql zip
 
 # Instala o Composer globalmente
