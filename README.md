@@ -1,6 +1,6 @@
 # Desafio Técnico - Projeto "desafio-tecnico-objective-raylan"
 
-Este projeto foi criado para atender aos requisitos do Desafio Técnico conforme descrito no arquivo [desafio_tcnico_obj.pdf](desafio_tecnico_obj.pdf).
+Este projeto foi criado para atender aos requisitos do Desafio Técnico conforme descrito no arquivo [desafio_tcnico_obj.pdf](desafio_tcnico_obj.pdf).
 
 ## Descrição
 
