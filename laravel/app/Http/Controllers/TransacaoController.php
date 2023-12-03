@@ -23,9 +23,9 @@ class TransacaoController extends Controller
         try {
             $transacaoData = $request->validated();
 
-            $transacaoCriada = $this->transacaoService->processarTransacao($transacaoData);
+            $conta = $this->transacaoService->processarTransacao($transacaoData);
 
-            return response()->json($transacaoCriada, Response::HTTP_CREATED);
+            return response()->json($conta, Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], Response::HTTP_NOT_FOUND);
         }
