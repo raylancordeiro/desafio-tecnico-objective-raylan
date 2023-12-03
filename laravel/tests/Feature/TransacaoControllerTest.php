@@ -10,11 +10,12 @@ use Tests\TestCase;
 
 class TransacaoControllerTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
-    public function test_store_transacao()
+    public function testStoreTransacao()
     {
-        $conta = Conta::factory()->create(['saldo' => 1000.00, 'conta_id'=> 8888]);
+        $conta = Conta::factory()->create(['saldo' => 1000.00, 'conta_id' => 8888]);
 
         $payload = [
             'conta_id' => $conta->conta_id,

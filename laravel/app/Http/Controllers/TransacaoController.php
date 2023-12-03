@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransacaoRequest;
-use App\Models\Transacao;
 use App\Repositories\TransacaoRepository;
 use App\Services\TransacaoService;
 use Symfony\Component\HttpFoundation\Response;
