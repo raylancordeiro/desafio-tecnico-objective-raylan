@@ -23,6 +23,9 @@ class TransacaoService
         $this->contaRepository = $contaRepository;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function processarTransacao(array $transacaoData): Transacao
     {
         $transacao = new Transacao($transacaoData);
@@ -41,6 +44,9 @@ class TransacaoService
         return $transacao;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function deduzirSaldo(Conta $conta, float $valor): void
     {
         if ($conta->saldo >= $valor) {

@@ -18,9 +18,9 @@ class ContaRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'conta_id' => [
@@ -36,7 +36,7 @@ class ContaRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'conta_id.required' => 'O campo conta_id é obrigatório.',

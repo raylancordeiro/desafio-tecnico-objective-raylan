@@ -10,7 +10,7 @@ class TransacaoFactory extends Factory
 {
     protected $model = Transacao::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
             'conta_id' => Conta::factory(),

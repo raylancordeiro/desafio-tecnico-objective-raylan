@@ -10,7 +10,7 @@ class ContaControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCriarConta()
+    public function testCriarConta(): void
     {
         $data = [
             'conta_id' => 1234,
