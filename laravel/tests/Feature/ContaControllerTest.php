@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Models\Conta;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ContaControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    private $contaId;
 
     public function testCriarConta(): void
     {
@@ -20,11 +21,14 @@ class ContaControllerTest extends TestCase
         $response = $this->post('api/conta', $data);
 
         $response->assertStatus(201)
-            ->assertJson([
-                'conta_id' => $data['conta_id'],
-                'saldo' => $data['saldo']
-        ]);
+            ->assertJson($data);
 
-        $this->artisan('migrate:refresh');
+        $this->contaId = $data['conta_id'];
+    }
+
+    protected function tearDown(): void
+    {
+        Conta::where('conta_id', $this->contaId)->delete();
+        parent::tearDown();
     }
 }

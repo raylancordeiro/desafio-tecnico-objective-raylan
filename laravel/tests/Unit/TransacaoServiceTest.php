@@ -5,14 +5,14 @@ namespace Tests\Unit\Services;
 use App\Models\Conta;
 use App\Models\Transacao;
 use App\Repositories\ContaRepository;
+use App\Repositories\TaxaRepository;
 use App\Repositories\TransacaoRepository;
 use App\Services\TransacaoService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class TransacaoServiceTest extends TestCase
 {
-    use RefreshDatabase;
+    private mixed $transacaoId;
 
     public function testProcessarTransacao(): void
     {
@@ -24,15 +24,21 @@ class TransacaoServiceTest extends TestCase
             'forma_pagamento' => 'D'
         ];
 
-        $transacaoService = new TransacaoService(new TransacaoRepository(), new ContaRepository());
+        $transacaoService = new TransacaoService(
+            new TransacaoRepository(),
+            new ContaRepository(),
+            new TaxaRepository()
+        );
+
+        $taxaRepository = new TaxaRepository();
 
         $transacao = Transacao::factory()->make($transacaoData)->makeVisible(['id']);
+        $this->transacaoId = $transacao->id;
 
         $transacao = $transacaoService->processarTransacao($transacao->toArray());
-
         $contaAtualizada = Conta::find($conta->conta_id);
 
-        $valorDebitado = $transacaoData['valor'] * TransacaoService::TAXA[$transacaoData['forma_pagamento']];
+        $valorDebitado = $transacaoData['valor'] * $taxaRepository->getTaxa($transacaoData['forma_pagamento']);
 
         $this->assertEquals($conta->saldo - $valorDebitado, $contaAtualizada->saldo);
 
@@ -41,5 +47,11 @@ class TransacaoServiceTest extends TestCase
 
         $this->assertDatabaseMissing('transacoes', ['id' => $transacao->id]);
         $this->assertDatabaseMissing('contas', ['conta_id' => $conta->conta_id]);
+    }
+
+    protected function tearDown(): void
+    {
+        Transacao::where('id', $this->transacaoId)->delete();
+        parent::tearDown();
     }
 }
