@@ -5,17 +5,17 @@ use App\Models\Conta;
 
 class ContaRepository
 {
-    public function create(array $data): Conta
+    public function create(array $data)
     {
         return Conta::create($data);
     }
 
-    public function findByContaId($contaId): Conta
+    public function findByContaId($contaId)
     {
         return Conta::where('conta_id', $contaId)->first();
     }
 
-    public function persistSaldo(Conta $conta, float $valor): void
+    public function persistSaldo(Conta $conta, float $valor)
     {
         $conta->setSaldo($conta->saldo - $valor);
         $conta->save();

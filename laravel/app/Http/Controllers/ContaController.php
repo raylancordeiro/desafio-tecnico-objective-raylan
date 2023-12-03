@@ -23,12 +23,12 @@ class ContaController extends Controller
         if ($contaId !== null) {
             $conta = $this->contaRepository->findByContaId($contaId);
 
-            if (!$conta) {
-                return response()->json(['message' => 'Conta não encontrada'], Response::HTTP_NOT_FOUND);
+            if ($conta !== null) {
+                return response()->json($conta);
             }
 
-            return response()->json($conta);
         }
+        return response()->json(['message' => 'Conta não encontrada'], Response::HTTP_NOT_FOUND);
     }
 
     public function store(ContaRequest $request): Response
