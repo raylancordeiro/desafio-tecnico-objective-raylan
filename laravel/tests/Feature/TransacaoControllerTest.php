@@ -4,7 +4,7 @@ namespace Tests\Feature\Controllers;
 
 use App\Models\Conta;
 use App\Models\Transacao;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Repositories\TaxaRepository;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -14,8 +14,9 @@ class TransacaoControllerTest extends TestCase
 
     public function testStoreTransacao(): void
     {
-        $conta = Conta::factory()->create(['saldo' => 1000.00, 'conta_id' => 8888]);
-
+        $taxaRepository = new TaxaRepository();
+        $saldoInicial = 1000.00;
+        $conta = Conta::factory()->create(['saldo' => $saldoInicial, 'conta_id' => 8888]);
         $payload = [
             'conta_id' => $conta->conta_id,
             'valor' => 100.00,
@@ -24,15 +25,16 @@ class TransacaoControllerTest extends TestCase
 
         $response = $this->post('/api/transacao', $payload);
 
-        $response->assertStatus(201)
-            ->assertJson($payload);
-
         $ultimoIdTransacao = Transacao::latest('id')->first()->id;
         $transacao = Transacao::find($ultimoIdTransacao);
+        $valorASerCobrado = $payload['valor'] * $taxaRepository->getTaxa($payload['forma_pagamento']);
+        $saldoAtualizado = $saldoInicial - $valorASerCobrado;
 
-        $this->assertEquals($payload['conta_id'], $transacao->conta_id);
-        $this->assertEquals($payload['valor'], $transacao->valor);
-        $this->assertEquals($payload['forma_pagamento'], $transacao->forma_pagamento);
+        $response->assertStatus(201)
+            ->assertJson([
+                'conta_id' => $payload['conta_id'],
+                'saldo' => $saldoAtualizado,
+            ]);
 
         $transacao->delete();
         $conta->delete();
