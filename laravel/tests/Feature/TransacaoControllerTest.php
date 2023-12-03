@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class TransacaoControllerTest extends TestCase
 {
-    use RefreshDatabase;
     use WithFaker;
 
     public function testStoreTransacao(): void
@@ -26,11 +25,7 @@ class TransacaoControllerTest extends TestCase
         $response = $this->post('/api/transacao', $payload);
 
         $response->assertStatus(201)
-            ->assertJson([
-                'conta_id' => $payload['conta_id'],
-                'valor' => $payload['valor'],
-                'forma_pagamento' => $payload['forma_pagamento']
-            ]);
+            ->assertJson($payload);
 
         $ultimoIdTransacao = Transacao::latest('id')->first()->id;
         $transacao = Transacao::find($ultimoIdTransacao);
