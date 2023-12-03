@@ -26,4 +26,10 @@ class Transacao extends Model
     {
         return $this->belongsTo(Conta::class);
     }
+
+
+    public function getValor(): float
+    {
+        return Conta::currencyFormat($this->valor);
+    }
 }

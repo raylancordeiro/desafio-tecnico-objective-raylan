@@ -29,4 +29,14 @@ class Conta extends Model
         }
         $this->attributes['saldo'] = $value;
     }
+
+    public function getSaldo(): float
+    {
+        return $this->currencyFormat($this->saldo);
+    }
+
+    public static function currencyFormat($value): float
+    {
+        return number_format($value, 2, '.', '');
+    }
 }

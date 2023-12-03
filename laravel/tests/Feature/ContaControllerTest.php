@@ -9,12 +9,12 @@ use Tests\TestCase;
 
 class ContaControllerTest extends TestCase
 {
-    private $contaId;
+    private $contaId = 9999;
 
     public function testCriarConta(): void
     {
         $data = [
-            'conta_id' => 1234,
+            'conta_id' => $this->contaId,
             'saldo' => 12.34,
         ];
 
@@ -22,8 +22,6 @@ class ContaControllerTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJson($data);
-
-        $this->contaId = $data['conta_id'];
     }
 
     protected function tearDown(): void

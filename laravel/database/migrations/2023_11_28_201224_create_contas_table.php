@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('contas', function (Blueprint $table) {
             $table->id('conta_id');
-            $table->float('saldo');
+            $table->decimal('saldo', 12, 2);
         });
     }
 

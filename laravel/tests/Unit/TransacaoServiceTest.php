@@ -20,7 +20,7 @@ class TransacaoServiceTest extends TestCase
 
         $transacaoData = [
             'conta_id' => $conta->conta_id,
-            'valor' => 100.00,
+            'valor' => 100.12,
             'forma_pagamento' => 'D'
         ];
 
@@ -39,8 +39,9 @@ class TransacaoServiceTest extends TestCase
         $contaAtualizada = Conta::find($conta->conta_id);
 
         $valorDebitado = $transacaoData['valor'] * $taxaRepository->getTaxa($transacaoData['forma_pagamento']);
+        $valorEsperado = number_format($conta->getSaldo() - $valorDebitado, 2, '.', '');
 
-        $this->assertEquals($conta->saldo - $valorDebitado, $contaAtualizada->saldo);
+        $this->assertEquals($valorEsperado, $contaAtualizada->getSaldo());
 
         $transacao->delete();
         $conta->delete();
