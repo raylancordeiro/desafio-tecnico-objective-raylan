@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Models\Conta;
+use App\Models\Taxa;
 use App\Models\Transacao;
 use App\Repositories\ContaRepository;
+use App\Repositories\TaxaRepository;
 use App\Repositories\TransacaoRepository;
 
 class TransacaoService
@@ -16,11 +18,16 @@ class TransacaoService
     ];
     private ContaRepository $contaRepository;
     private TransacaoRepository $transacaoRepository;
+    private TaxaRepository $taxaRepository;
 
-    public function __construct(TransacaoRepository $transacaoRepository, ContaRepository $contaRepository)
-    {
+    public function __construct(
+        TransacaoRepository $transacaoRepository,
+        ContaRepository $contaRepository,
+        TaxaRepository $taxaRepository
+    ) {
         $this->transacaoRepository = $transacaoRepository;
         $this->contaRepository = $contaRepository;
+        $this->taxaRepository = $taxaRepository;
     }
 
     /**
@@ -35,7 +42,7 @@ class TransacaoService
         $valorTransacao = $transacao->valor;
         $formaPagamento = $transacao->forma_pagamento;
 
-        $valorASerCobrado = $valorTransacao * self::TAXA[$formaPagamento];
+        $valorASerCobrado = $valorTransacao * $this->taxaRepository->getTaxa($formaPagamento);
 
         $this->deduzirSaldo($conta, $valorASerCobrado);
         $transacao = $this->transacaoRepository->create($transacaoData);
