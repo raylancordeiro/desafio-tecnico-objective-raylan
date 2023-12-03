@@ -13,8 +13,9 @@ services:
     command: >
       bash -c 'while ! mysqladmin ping -h"db" --silent; do sleep 1; done &&
       if [ ! -d "/var/www/vendor" ]; then composer install; fi &&
+      php /var/www/artisan serve --host=0.0.0.0 --port=80' &&
       php /var/www/artisan migrate &&
-      php /var/www/artisan serve --host=0.0.0.0 --port=80'
+      php /var/www/artisan db:seed
     depends_on:
       - db
 
