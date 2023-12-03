@@ -16,7 +16,7 @@ class ContaController extends Controller
         $this->contaRepository = $contaRepository;
     }
 
-    public function getConta(Request $request)
+    public function getConta(Request $request): Response
     {
         $contaId = $request->query('id');
 
@@ -31,7 +31,7 @@ class ContaController extends Controller
         }
     }
 
-    public function store(ContaRequest $request)
+    public function store(ContaRequest $request): Response
     {
         $data = $request->validated();
 

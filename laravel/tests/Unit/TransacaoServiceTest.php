@@ -14,7 +14,7 @@ class TransacaoServiceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testProcessarTransacao()
+    public function testProcessarTransacao(): void
     {
         $conta = Conta::factory()->create(['saldo' => 1000.00, 'conta_id' => 9999]);
 

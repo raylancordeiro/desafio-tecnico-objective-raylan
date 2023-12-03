@@ -13,7 +13,7 @@ class TransacaoControllerTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    public function testStoreTransacao()
+    public function testStoreTransacao(): void
     {
         $conta = Conta::factory()->create(['saldo' => 1000.00, 'conta_id' => 8888]);
 

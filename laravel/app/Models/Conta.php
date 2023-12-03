@@ -22,7 +22,7 @@ class Conta extends Model
         'saldo',
     ];
 
-    public function setSaldo($value)
+    public function setSaldo($value): void
     {
         if ($value < 0) {
             throw new \InvalidArgumentException('O saldo não pode ser menor que zero.');

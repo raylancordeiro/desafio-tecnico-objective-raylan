@@ -9,7 +9,7 @@ class ContaFactory extends Factory
 {
     protected $model = Conta::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
             'saldo' => $this->faker->numberBetween(100, 1000),

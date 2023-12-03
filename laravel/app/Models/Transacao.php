@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Transacao extends Model
 {
@@ -21,7 +22,7 @@ class Transacao extends Model
 
     protected $table = 'transacoes';
 
-    public function conta()
+    public function conta(): BelongsTo
     {
         return $this->belongsTo(Conta::class);
     }

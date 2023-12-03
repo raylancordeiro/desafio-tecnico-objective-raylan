@@ -18,7 +18,7 @@ class TransacaoController extends Controller
         $this->transacaoService = $transacaoService;
     }
 
-    public function store(TransacaoRequest $request)
+    public function store(TransacaoRequest $request): Response
     {
         try {
             $transacaoData = $request->validated();
