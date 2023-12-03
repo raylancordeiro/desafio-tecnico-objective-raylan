@@ -5,11 +5,13 @@ use App\Models\Conta;
 
 class ContaRepository
 {
-    public function create(array $data) {
+    public function create(array $data)
+    {
         return Conta::create($data);
     }
 
-    public function getAllContas() {
+    public function getAllContas()
+    {
         return Conta::all();
     }
 

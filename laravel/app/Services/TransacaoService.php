@@ -9,11 +9,13 @@ use App\Repositories\TransacaoRepository;
 
 class TransacaoService
 {
-    const TAXA = [
+    public const TAXA = [
         'D' => 1.03,
         'C' => 1.05,
         'P' => 1
     ];
+    private ContaRepository $contaRepository;
+    private TransacaoRepository $transacaoRepository;
 
     public function __construct(TransacaoRepository $transacaoRepository, ContaRepository $contaRepository)
     {

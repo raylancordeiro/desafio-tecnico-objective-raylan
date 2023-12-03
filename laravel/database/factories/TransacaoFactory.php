@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Transacao;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use \App\Models\Conta;
+use App\Models\Conta;
 
 class TransacaoFactory extends Factory
 {

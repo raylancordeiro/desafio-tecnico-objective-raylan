@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Requests\ContaRequest;
 use App\Repositories\ContaRepository;
-
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -31,7 +31,8 @@ class ContaController extends Controller
         }
     }
 
-    public function store(ContaRequest $request) {
+    public function store(ContaRequest $request)
+    {
         $data = $request->validated();
 
         $conta = $this->contaRepository->create($data);
