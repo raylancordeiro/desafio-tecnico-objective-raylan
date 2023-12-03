@@ -24,7 +24,10 @@ class ContaController extends Controller
             $conta = $this->contaRepository->findByContaId($contaId);
 
             if ($conta !== null) {
-                return response()->json($conta);
+                return response()->json([
+                    'conta_id' => $conta->conta_id,
+                    'saldo' => $conta->getSaldo(),
+                ]);
             }
 
         }

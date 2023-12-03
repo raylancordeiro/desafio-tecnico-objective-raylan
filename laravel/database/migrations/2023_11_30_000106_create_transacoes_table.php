@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('conta_id');
             $table->char('forma_pagamento', 1);
-            $table->float('valor');
+            $table->decimal('valor', 12, 2);
         });
     }
 

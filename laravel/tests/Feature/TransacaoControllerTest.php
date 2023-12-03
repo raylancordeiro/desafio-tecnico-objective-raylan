@@ -33,7 +33,7 @@ class TransacaoControllerTest extends TestCase
         $response->assertStatus(201)
             ->assertJson([
                 'conta_id' => $payload['conta_id'],
-                'saldo' => $saldoAtualizado,
+                'valor' => Conta::currencyFormat($saldoAtualizado)
             ]);
 
         $transacao->delete();

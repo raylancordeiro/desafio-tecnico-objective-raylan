@@ -25,7 +25,10 @@ class TransacaoController extends Controller
 
             $conta = $this->transacaoService->processarTransacao($transacaoData);
 
-            return response()->json($conta, Response::HTTP_CREATED);
+            return response()->json([
+                'conta_id' => $conta->conta_id,
+                'valor' => $conta->getSaldo(),
+            ], Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], Response::HTTP_NOT_FOUND);
         }
