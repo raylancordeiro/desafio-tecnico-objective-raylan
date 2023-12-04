@@ -3,30 +3,21 @@
 namespace Tests\Feature;
 
 use App\Models\Conta;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Repositories\ContaRepository;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class ContaControllerTest extends TestCase
 {
-    private $contaId = 9999;
-
     public function testCriarConta(): void
     {
-        $data = [
-            'conta_id' => $this->contaId,
-            'saldo' => 12.34,
-        ];
-
-        $response = $this->post('api/conta', $data);
+        $conta = Conta::factory()->make();
+        $response = $this->post('api/conta', $conta->toArray());
 
         $response->assertStatus(201)
-            ->assertJson($data);
-    }
+            ->assertJson($conta->toArray());
 
-    protected function tearDown(): void
-    {
-        Conta::where('conta_id', $this->contaId)->delete();
-        parent::tearDown();
+        $contaCriada = Conta::find($response['conta_id']);
+        $contaCriada->delete();
     }
 }

@@ -13,8 +13,8 @@ class TransacaoFactory extends Factory
     public function definition(): array
     {
         return [
-            'conta_id' => Conta::factory(),
-            'valor' => $this->faker->randomFloat(2, 10, 500),
+            'conta_id' => Conta::factory()->create(),
+            'valor' => $this->faker->randomFloat(2, 10, 100),
             'forma_pagamento' => $this->faker->randomElement(['D', 'C', 'P']),
         ];
     }

@@ -12,47 +12,31 @@ use Tests\TestCase;
 
 class TransacaoServiceTest extends TestCase
 {
-    private mixed $transacaoId;
 
     public function testProcessarTransacao(): void
     {
-        $conta = Conta::factory()->create(['saldo' => 1000.00, 'conta_id' => 9999]);
-
-        $transacaoData = [
-            'conta_id' => $conta->conta_id,
-            'valor' => 100.12,
-            'forma_pagamento' => 'D'
-        ];
-
+        $transacao = Transacao::factory()->make()->makeVisible(['id']);
+        $taxaRepository = new TaxaRepository();
         $transacaoService = new TransacaoService(
             new TransacaoRepository(),
             new ContaRepository(),
             new TaxaRepository()
         );
 
-        $taxaRepository = new TaxaRepository();
+        $conta = Conta::find($transacao->conta_id);
+        $saldoInicial = $conta->getSaldo();
 
-        $transacao = Transacao::factory()->make($transacaoData)->makeVisible(['id']);
-        $this->transacaoId = $transacao->id;
+        $contaAtualizada = $transacaoService->processarTransacao($transacao->toArray());
 
-        $transacao = $transacaoService->processarTransacao($transacao->toArray());
-        $contaAtualizada = Conta::find($conta->conta_id);
+        $valorCobrado = $transacao->valor * $taxaRepository->getTaxa($transacao->forma_pagamento);
+        $saldoEsperado = Conta::currencyFormat($saldoInicial - $valorCobrado);
 
-        $valorDebitado = $transacaoData['valor'] * $taxaRepository->getTaxa($transacaoData['forma_pagamento']);
-        $valorEsperado = number_format($conta->getSaldo() - $valorDebitado, 2, '.', '');
+        $this->assertEquals($saldoEsperado, $contaAtualizada->getSaldo());
 
-        $this->assertEquals($valorEsperado, $contaAtualizada->getSaldo());
-
-        $transacao->delete();
         $conta->delete();
+        $transacao->delete();
 
         $this->assertDatabaseMissing('transacoes', ['id' => $transacao->id]);
         $this->assertDatabaseMissing('contas', ['conta_id' => $conta->conta_id]);
-    }
-
-    protected function tearDown(): void
-    {
-        Transacao::where('id', $this->transacaoId)->delete();
-        parent::tearDown();
     }
 }
