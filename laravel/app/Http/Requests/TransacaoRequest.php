@@ -16,7 +16,7 @@ class TransacaoRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Obtém regras de validação da requisição transação
      *
      * @return array<string, ValidationRule|array|string>
      */
@@ -40,6 +40,13 @@ class TransacaoRequest extends FormRequest
         ];
     }
 
+    /**
+     * Personaliza um retorno de erro específico para exceções de validação do atributo conta_id
+     *
+     * @param Validator $validator
+     * @return void
+     * @throws ValidationException
+     */
     protected function failedValidation(Validator $validator): void
     {
         $errors = $validator->errors();
@@ -58,6 +65,11 @@ class TransacaoRequest extends FormRequest
         parent::failedValidation($validator);
     }
 
+    /**
+     * Obtém mensagens de erro personalizadas
+     *
+     * @return string[]
+     */
     public function messages(): array
     {
         return [

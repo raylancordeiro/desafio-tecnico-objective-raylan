@@ -9,15 +9,29 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TransacaoController extends Controller
 {
+    /**
+     * @var TransacaoRepository
+     */
     protected TransacaoRepository $transacaoRepository;
+    /**
+     * @var TransacaoService
+     */
     private TransacaoService $transacaoService;
 
+    /**
+     * @param TransacaoRepository $transacaoRepository
+     * @param TransacaoService $transacaoService
+     */
     public function __construct(TransacaoRepository $transacaoRepository, TransacaoService $transacaoService)
     {
         $this->transacaoRepository = $transacaoRepository;
         $this->transacaoService = $transacaoService;
     }
 
+    /**
+     * @param TransacaoRequest $request
+     * @return Response
+     */
     public function store(TransacaoRequest $request): Response
     {
         try {

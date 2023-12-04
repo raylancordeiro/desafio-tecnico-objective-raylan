@@ -25,6 +25,8 @@ class TransacaoService
     }
 
     /**
+     * Função responsável por processar a transação
+     *
      * @throws \Exception
      */
     public function processarTransacao(array $transacaoData): Conta
@@ -45,6 +47,8 @@ class TransacaoService
     }
 
     /**
+     * Deduz um valor do saldo de uma conta
+     *
      * @throws \Exception
      */
     private function deduzirSaldo(Conta $conta, float $valor): void

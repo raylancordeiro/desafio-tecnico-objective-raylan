@@ -9,13 +9,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContaController extends Controller
 {
+    /**
+     * @var ContaRepository
+     */
     protected ContaRepository $contaRepository;
 
+    /**
+     * @param ContaRepository $contaRepository
+     */
     public function __construct(ContaRepository $contaRepository)
     {
         $this->contaRepository = $contaRepository;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function getConta(Request $request): Response
     {
         $contaId = $request->query('id');
@@ -34,6 +44,10 @@ class ContaController extends Controller
         return response()->json(['message' => 'Conta não encontrada'], Response::HTTP_NOT_FOUND);
     }
 
+    /**
+     * @param ContaRequest $request
+     * @return Response
+     */
     public function store(ContaRequest $request): Response
     {
         $data = $request->validated();

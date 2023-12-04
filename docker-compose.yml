@@ -7,9 +7,9 @@ services:
       dockerfile: Dockerfile
     container_name: desafio-tecnico-objective-raylan
     ports:
-      - "8000:80"  # Mapeamento da porta do host para o contêiner (altere conforme necessário)
+      - "8000:80"
     volumes:
-      - ./laravel:/var/www  # Mapeamento do diretório local 'laravel' para o diretório do contêiner
+      - ./laravel:/var/www
     command: >
       bash -c 'while ! mysqladmin ping -h"db" --silent; do sleep 1; done &&
       if [ ! -d "/var/www/vendor" ]; then composer install; fi &&

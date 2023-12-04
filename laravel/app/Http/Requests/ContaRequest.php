@@ -16,7 +16,7 @@ class ContaRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Obtém regras de validação da requisição conta
      *
      * @return array<string, ValidationRule|array|string>
      */
@@ -36,6 +36,11 @@ class ContaRequest extends FormRequest
         ];
     }
 
+    /**
+     * Obtém mensagens de erro personalizadas
+     *
+     * @return string[]
+     */
     public function messages(): array
     {
         return [
