@@ -15,24 +15,21 @@ class TransacaoControllerTest extends TestCase
     public function testStoreTransacao(): void
     {
         $taxaRepository = new TaxaRepository();
-        $saldoInicial = 1000.00;
-        $conta = Conta::factory()->create(['saldo' => $saldoInicial, 'conta_id' => 8888]);
-        $payload = [
-            'conta_id' => $conta->conta_id,
-            'valor' => 100.00,
-            'forma_pagamento' => 'C'
-        ];
+        $payload = Transacao::factory()->make();
+        $saldoInicial = Conta::find($payload->conta_id)->getSaldo();
 
-        $response = $this->post('/api/transacao', $payload);
+        $response = $this->post('/api/transacao', $payload->toArray());
 
         $ultimoIdTransacao = Transacao::latest('id')->first()->id;
         $transacao = Transacao::find($ultimoIdTransacao);
-        $valorASerCobrado = $payload['valor'] * $taxaRepository->getTaxa($payload['forma_pagamento']);
-        $saldoAtualizado = $saldoInicial - $valorASerCobrado;
+        $valorASerCobrado = $payload->valor * $taxaRepository->getTaxa($payload->forma_pagamento);
+        $saldoAtualizado = Conta::currencyFormat($saldoInicial - $valorASerCobrado);
+
+        $conta = Conta::find($transacao->conta_id);
 
         $response->assertStatus(201)
             ->assertJson([
-                'conta_id' => $payload['conta_id'],
+                'conta_id' => $payload->conta_id,
                 'valor' => Conta::currencyFormat($saldoAtualizado)
             ]);
 
