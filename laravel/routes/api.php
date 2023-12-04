@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/conta', [ContaController::class, 'getConta']);
+Route::get('/conta', [ContaController::class, 'getConta'])->name('conta');
 Route::post('/conta', [ContaController::class, "store"]);
 Route::post('/transacao', [TransacaoController::class, 'store']);
