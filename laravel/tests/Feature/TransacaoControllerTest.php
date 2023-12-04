@@ -10,10 +10,19 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
+/**
+ * Testa controller Transacao.
+ */
 class TransacaoControllerTest extends TestCase
 {
     use WithFaker;
 
+    /**
+     * Testa POST api/transacao.
+     *
+     * @return void
+     * @throws \Exception
+     */
     public function testStoreTransacao(): void
     {
         $taxaRepository = new TaxaRepository();
@@ -42,7 +51,12 @@ class TransacaoControllerTest extends TestCase
         $this->assertDatabaseMissing('contas', ['conta_id' => $conta->conta_id]);
     }
 
-    public function testNotFound()
+    /**
+     * Testa exceção da rota POST api/transacao passando uma conta inválida.
+     *
+     * @return void
+     */
+    public function testNotFound(): void
     {
         $response = $this->post('/api/transacao', [
             'conta_id' => mt_rand(1000, 9999),
@@ -53,7 +67,12 @@ class TransacaoControllerTest extends TestCase
     }
 
 
-    public function testUnprocessableEntityInvalidPaymentMethod()
+    /**
+     * Testa exceção da rota POST api/transacao passando uma forma de pagamento inválida.
+     *
+     * @return void
+     */
+    public function testUnprocessableEntityInvalidPaymentMethod(): void
     {
         $conta = Conta::factory()->create();
 
@@ -68,7 +87,12 @@ class TransacaoControllerTest extends TestCase
         $conta->delete();
     }
 
-    public function testUnprocessableEntityInvalidValue()
+    /**
+     * Testa exceção da rota POST api/transacao passando um valor do tipo string.
+     *
+     * @return void
+     */
+    public function testUnprocessableEntityInvalidValue(): void
     {
         $conta = Conta::factory()->create();
 

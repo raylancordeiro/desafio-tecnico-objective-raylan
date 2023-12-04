@@ -10,9 +10,17 @@ use App\Repositories\TransacaoRepository;
 use App\Services\TransacaoService;
 use Tests\TestCase;
 
+/**
+ * Teste unitário da classe TransacaoService
+ */
 class TransacaoServiceTest extends TestCase
 {
-
+    /**
+     * Testa calculo da função TransacaoService::processarPagamento()
+     *
+     * @return void
+     * @throws \Exception
+     */
     public function testProcessarTransacao(): void
     {
         $transacao = Transacao::factory()->make()->makeVisible(['id']);
