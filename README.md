@@ -25,7 +25,7 @@ Certifique-se de ter o Docker instalado em seu sistema para criar e executar o a
 
 3. Para construir e iniciar o contêiner, execute:
     ```bash
-    docker-compose up --build
+    docker-compose up
     ```
 
-Após o contêiner ser iniciado, você pode acessar o ambiente de desenvolvimento para instalar um projeto Laravel ou realizar outras operações necessárias.
+Após o contêiner ser iniciado, você pode efetuar requisições seguindo as orientações presentes na [Documentação](APIdocumentation/documentation.md)

@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  title: Documentação da API do desafio Objective
+  description: Descrição da API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /api/conta:
+    get:
+      summary: Obter conta
+      description: Obtém informações de uma conta
+      parameters:
+        - name: id
+          in: query
+          description: ID da conta
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conta_id:
+                    type: integer
+                  saldo:
+                    type: number
+        '404':
+          description: Conta não encontrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+    post:
+      summary: Criar conta
+      description: Cria uma nova conta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                conta_id:
+                  type: integer
+                saldo:
+                  type: number
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conta_id:
+                    type: integer
+                  saldo:
+                    type: number
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  errors:
+                    type: object
+                    properties:
+                      conta_id:
+                        type: array
+                        items:
+                          type: string
+                      saldo:
+                        type: array
+                        items:
+                          type: string
+
+  /api/transacao:
+    post:
+      summary: Criar transação
+      description: Cria uma nova transação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                conta_id:
+                  type: integer
+                valor:
+                  type: number
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conta_id:
+                    type: integer
+                  valor:
+                    type: number
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  errors:
+                    type: object
+                    properties:
+                      forma_pagamento:
+                        type: array
+                        items:
+                          type: string
