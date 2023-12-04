@@ -2,10 +2,6 @@
 
 Este projeto foi criado para atender aos requisitos do Desafio Técnico conforme descrito no arquivo [desafio_tcnico_obj.pdf](desafio_tcnico_obj.pdf).
 
-## Descrição
-
-Este repositório contém os arquivos necessários para configurar um ambiente Docker com PHP 8.2 e Composer para fins de desenvolvimento do projeto. O Dockerfile e o docker-compose.yml foram preparados para criar um contêiner capaz de executar projetos Laravel versão 10.
-
 ## Configuração do Ambiente
 
 Certifique-se de ter o Docker instalado em seu sistema para criar e executar o ambiente.
