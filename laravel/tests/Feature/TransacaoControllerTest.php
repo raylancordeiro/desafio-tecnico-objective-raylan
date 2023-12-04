@@ -6,6 +6,8 @@ use App\Models\Conta;
 use App\Models\Transacao;
 use App\Repositories\TaxaRepository;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class TransacaoControllerTest extends TestCase
@@ -38,5 +40,46 @@ class TransacaoControllerTest extends TestCase
 
         $this->assertDatabaseMissing('transacoes', ['id' => $ultimoIdTransacao]);
         $this->assertDatabaseMissing('contas', ['conta_id' => $conta->conta_id]);
+    }
+
+    public function testNotFound()
+    {
+        $response = $this->post('/api/transacao', [
+            'conta_id' => mt_rand(1000, 9999),
+            'forma_pagamento' => 'D',
+            'valor' => mt_rand(100, 9999) / 100
+        ]);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+
+    public function testUnprocessableEntityInvalidPaymentMethod()
+    {
+        $conta = Conta::factory()->create();
+
+        $response = $this->post('/api/transacao', [
+            'conta_id' => $conta->conta_id,
+            'forma_pagamento' => 'E',
+            'valor' => mt_rand(100, 9999) / 100
+        ]);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $conta->delete();
+    }
+
+    public function testUnprocessableEntityInvalidValue()
+    {
+        $conta = Conta::factory()->create();
+
+        $response = $this->post('/api/transacao', [
+            'conta_id' => $conta->conta_id,
+            'forma_pagamento' => 'P',
+            'valor' => Str::random(4),
+        ]);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $conta->delete();
     }
 }
